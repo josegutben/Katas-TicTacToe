@@ -15,7 +15,7 @@ namespace TicTacToe.Tests {
 
         [Test]
         public void o_player_can_not_be_the_first_player() {
-            Action wrongPlayer = () => game.Play('O', 0, 0);
+            Action wrongPlayer = () => game.Play(new SymbolPlayer('O'), 0, 0);
 
             wrongPlayer.Should().Throw<MovementCouldNotBeCompletedException>().And.Reason.Should().Be(MovementErrorReason.WrongFirstPlayer);
         }

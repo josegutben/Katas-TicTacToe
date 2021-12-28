@@ -8,8 +8,8 @@ namespace TicTacToe {
             lastSymbol = ' ';
         }
 
-        public void Play(char symbol, int x, int y) {
-            if (lastSymbol == ' ' && symbol == 'O') {
+        public void Play(SymbolPlayer symbolPlayer, int x, int y) {
+            if (lastSymbol == ' ' && symbolPlayer.IsOPlayer()) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
         }
