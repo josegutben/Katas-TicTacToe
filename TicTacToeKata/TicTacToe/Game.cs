@@ -9,9 +9,13 @@ namespace TicTacToe {
         }
 
         public void Play(SymbolPlayer symbolPlayer, int x, int y) {
-            if (lastSymbol == ' ' && symbolPlayer.IsOPlayer()) {
+            if (IsOFirstPlayer(symbolPlayer)) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
+        }
+
+        private bool IsOFirstPlayer(SymbolPlayer symbolPlayer) {
+            return lastSymbol == ' ' && symbolPlayer.IsOPlayer();
         }
     }
 }
