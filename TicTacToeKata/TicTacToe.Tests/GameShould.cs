@@ -19,5 +19,13 @@ namespace TicTacToe.Tests {
 
             wrongPlayer.Should().Throw<MovementCouldNotBeCompletedException>().And.Reason.Should().Be(MovementErrorReason.WrongFirstPlayer);
         }
+
+        [Test]
+        public void players_can_not_move_twice() {
+            game.Play(new SymbolPlayer('X'), 0, 0);
+            Action wrongPlayerTurn = () => game.Play(new SymbolPlayer('X'), 0, 1);
+
+            wrongPlayerTurn.Should().Throw<MovementCouldNotBeCompletedException>().And.Reason.Should().Be(MovementErrorReason.NoPlayerTurn);
+        }
     }
 }
