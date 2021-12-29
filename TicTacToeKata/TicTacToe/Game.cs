@@ -2,7 +2,7 @@
 
 namespace TicTacToe {
     public class Game {
-        private Board board;
+        private readonly Board board;
         private SymbolPlayer lastSymbol;
 
         public Game() {
@@ -10,14 +10,19 @@ namespace TicTacToe {
             lastSymbol = new SymbolPlayer(' ');
         }
 
-        public void Play(SymbolPlayer symbolPlayer, int x, int y) {
+        public void Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             CheckMovement(symbolPlayer);
-            if(board.Tiles[x, y] != ' ')
-            {
+            TryToMove(symbolPlayer, coordinates);
+            lastSymbol = symbolPlayer;
+        }
+
+        private void TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+            try {
+                board.Move(symbolPlayer, coordinates);
+            }
+            catch (PositionAlreadyInUseException) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.PositionAlreadyInUse);
             }
-            board.Tiles[x, y] = symbolPlayer.GetSymbol();
-            lastSymbol = symbolPlayer;
         }
 
         private void CheckMovement(SymbolPlayer symbolPlayer) {

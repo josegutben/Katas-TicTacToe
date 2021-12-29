@@ -37,7 +37,7 @@ namespace TicTacToe.Tests {
         }
 
         private void Play(SymbolPlayer symbolPlayer, int x, int y) {
-            game.Play(symbolPlayer, x, y);
+            game.Play(symbolPlayer, new Coordinates(x, y));
         }
     }
 }

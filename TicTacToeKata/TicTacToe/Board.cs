@@ -1,22 +1,13 @@
-﻿using System.ComponentModel.Design;
-
-namespace TicTacToe {
+﻿namespace TicTacToe {
     public class Board {
-        public char[,] Tiles { get; set; }
+        private BoardTiles boardTiles;
 
         public Board() {
-            Tiles = Initialize();
+            boardTiles = new BoardTiles();
         }
 
-        private char[,] Initialize() {
-            var tiles = new char[3,3];
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    tiles[i, j] = ' ';
-                }
-            }
-
-            return tiles;
+        public void Move(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+            boardTiles.AddTile(symbolPlayer.GetSymbol(), coordinates);
         }
     }
 }
