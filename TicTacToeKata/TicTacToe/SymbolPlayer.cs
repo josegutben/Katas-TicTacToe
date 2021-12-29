@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace TicTacToe {
+﻿namespace TicTacToe {
     public class SymbolPlayer {
         private readonly char symbol;
 
@@ -28,6 +25,10 @@ namespace TicTacToe {
 
         public bool Equals(SymbolPlayer symbolPlayer) {
             return symbolPlayer.symbol == symbol;
+        }
+
+        public char GetSymbol() {
+            return symbol;
         }
     }
 }
