@@ -9,6 +9,11 @@ namespace TicTacToe {
         }
 
         public void Play(SymbolPlayer symbolPlayer, int x, int y) {
+            CheckMovement(symbolPlayer);
+            lastSymbol = symbolPlayer;
+        }
+
+        private void CheckMovement(SymbolPlayer symbolPlayer) {
             if (IsOFirstPlayer(symbolPlayer)) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
@@ -16,8 +21,6 @@ namespace TicTacToe {
             if (IsNoTurnForPlayer(symbolPlayer)) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.NoPlayerTurn);
             }
-
-            lastSymbol = symbolPlayer;
         }
 
         private bool IsNoTurnForPlayer(SymbolPlayer symbolPlayer) {
