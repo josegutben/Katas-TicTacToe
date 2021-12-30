@@ -75,6 +75,22 @@ namespace TicTacToe.Tests {
             playResult.Should().BeEquivalentTo(expectedGameResult);
         }
 
+        [Test]
+        public void game_ended_tied_if_all_tiles_are_filled_and_there_is_no_winner() {
+            var expectedGameResult = new GameResult(true, ' ');
+            Play(new SymbolPlayer('X'), 1, 1);
+            Play(new SymbolPlayer('O'), 2, 1);
+            Play(new SymbolPlayer('X'), 2, 0);
+            Play(new SymbolPlayer('O'), 0, 2);
+            Play(new SymbolPlayer('X'), 2, 2);
+            Play(new SymbolPlayer('O'), 0, 0);
+            Play(new SymbolPlayer('X'), 1, 0);
+            Play(new SymbolPlayer('O'), 0, 0);
+            var playResult = Play(new SymbolPlayer('X'), 0, 1);
+
+            playResult.Should().BeEquivalentTo(expectedGameResult);
+        }
+
         private GameResult Play(SymbolPlayer symbolPlayer, int x, int y) {
             return game.Play(symbolPlayer, new Coordinates(x, y));
         }
