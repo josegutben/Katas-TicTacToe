@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe {
     public class Board {
-        private BoardTiles boardTiles;
+        private readonly BoardTiles boardTiles;
 
         public Board() {
             boardTiles = new BoardTiles();

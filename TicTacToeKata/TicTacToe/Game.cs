@@ -14,11 +14,11 @@ namespace TicTacToe {
             CheckMovement(symbolPlayer);
             TryToMove(symbolPlayer, coordinates);
             lastSymbol = symbolPlayer;
-            if (board.GameIsFinished()) {
-                return new GameResult(true, lastSymbol.GetSymbol());
-            }
+            return CheckGameResult();
+        }
 
-            return new GameResult(false, ' ');
+        private GameResult CheckGameResult() {
+            return board.GameIsFinished() ? new GameResult(true, lastSymbol.GetSymbol()) : new GameResult(false, ' ');
         }
 
         private void TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
