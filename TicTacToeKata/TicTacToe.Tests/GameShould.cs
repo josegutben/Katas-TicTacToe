@@ -37,7 +37,7 @@ namespace TicTacToe.Tests {
         }
 
         [Test]
-        public void player_win_if_has_three_tiles_in_horizontal_line() {
+        public void player_win_if_has_three_tiles_in_vertical_line() {
             var expectedGameResult = new GameResult(true, 'X');
             Play(new SymbolPlayer('X'), 0, 0);
             Play(new SymbolPlayer('O'), 1, 0);

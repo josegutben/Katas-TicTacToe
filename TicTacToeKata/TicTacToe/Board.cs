@@ -11,7 +11,7 @@
         }
 
         public bool GameIsFinished() {
-            return boardTiles.AnyWinnerInHorizontal();
+            return boardTiles.AnyWinnerInVerticalLine();
         }
     }
 }
