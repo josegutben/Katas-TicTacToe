@@ -62,6 +62,19 @@ namespace TicTacToe.Tests {
             playResult.Should().BeEquivalentTo(expectedGameResult);
         }
 
+        [Test]
+        public void player_win_if_has_three_tiles_in_diagonal_line() {
+            var expectedGameResult = new GameResult(true, 'X');
+            Play(new SymbolPlayer('X'), 0, 0);
+            Play(new SymbolPlayer('O'), 0, 1);
+            Play(new SymbolPlayer('X'), 1, 1);
+            Play(new SymbolPlayer('O'), 0, 2);
+
+            var playResult = Play(new SymbolPlayer('X'), 2, 2);
+
+            playResult.Should().BeEquivalentTo(expectedGameResult);
+        }
+
         private GameResult Play(SymbolPlayer symbolPlayer, int x, int y) {
             return game.Play(symbolPlayer, new Coordinates(x, y));
         }
