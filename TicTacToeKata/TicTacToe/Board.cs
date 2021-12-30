@@ -9,5 +9,9 @@
         public void Move(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             boardTiles.AddTile(symbolPlayer.GetSymbol(), coordinates);
         }
+
+        public bool GameIsFinished() {
+            return boardTiles.AnyWinnerInHorizontal();
+        }
     }
 }
