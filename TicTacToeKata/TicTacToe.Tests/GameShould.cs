@@ -36,8 +36,21 @@ namespace TicTacToe.Tests {
             wrongMovement.Should().Throw<MovementCouldNotBeCompletedException>().And.Reason.Should().Be(MovementErrorReason.PositionAlreadyInUse);
         }
 
-        private void Play(SymbolPlayer symbolPlayer, int x, int y) {
-            game.Play(symbolPlayer, new Coordinates(x, y));
+        [Test]
+        public void player_win_if_has_three_tiles_in_horizontal_line() {
+            var expectedGameResult = new GameResult(true, 'X');
+            Play(new SymbolPlayer('X'), 0, 0);
+            Play(new SymbolPlayer('O'), 1, 0);
+            Play(new SymbolPlayer('X'), 0, 1);
+            Play(new SymbolPlayer('O'), 1, 1);
+            
+            var playResult = Play(new SymbolPlayer('X'), 0, 2);
+
+            playResult.Should().BeEquivalentTo(expectedGameResult);
+        }
+
+        private GameResult Play(SymbolPlayer symbolPlayer, int x, int y) {
+            return game.Play(symbolPlayer, new Coordinates(x, y));
         }
     }
 }

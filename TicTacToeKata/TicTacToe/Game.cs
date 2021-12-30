@@ -10,10 +10,11 @@ namespace TicTacToe {
             lastSymbol = new SymbolPlayer(' ');
         }
 
-        public void Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+        public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             CheckMovement(symbolPlayer);
             TryToMove(symbolPlayer, coordinates);
             lastSymbol = symbolPlayer;
+            return new GameResult(false, ' ');
         }
 
         private void TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
