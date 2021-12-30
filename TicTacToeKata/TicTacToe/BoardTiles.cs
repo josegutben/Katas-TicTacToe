@@ -30,5 +30,11 @@ namespace TicTacToe {
                    (tiles[1, 0] == tiles[1, 1] && tiles[1, 1] == tiles[1, 2]) ||
                    (tiles[2, 0] == tiles[2, 1] && tiles[2, 1] == tiles[2, 2]);
         }
+
+        public bool AnyWinnerInHorizontalLine() {
+            return (tiles[0, 0] == tiles[1, 0] && tiles[1, 0] == tiles[2, 0]) ||
+                   (tiles[0, 1] == tiles[1, 1] && tiles[1, 1] == tiles[2, 1]) ||
+                   (tiles[0, 2] == tiles[1, 2] && tiles[1, 2] == tiles[2, 2]);
+        }
     }
 }
