@@ -13,7 +13,6 @@ namespace TicTacToe {
         public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             CheckMovement(symbolPlayer);
             TryToMove(symbolPlayer, coordinates);
-            lastSymbol = symbolPlayer;
             return CheckGameResult();
         }
 
@@ -24,6 +23,7 @@ namespace TicTacToe {
         private void TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             try {
                 board.Move(symbolPlayer, coordinates);
+                lastSymbol = symbolPlayer;
             }
             catch (PositionAlreadyInUseException) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.PositionAlreadyInUse);
