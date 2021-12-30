@@ -17,6 +17,10 @@ namespace TicTacToe {
             tiles[coordinates.X, coordinates.Y] = symbol;
         }
 
+        public bool SameSymbolInLine() {
+            return SameSymbolInVertical() || SameSymbolInHorizontal() || SameSymbolInDiagonal();
+        }
+
         private void InitializeTiles() {
             for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++) {
@@ -25,19 +29,19 @@ namespace TicTacToe {
             }
         }
 
-        public bool AnyWinnerInVerticalLine() {
+        private bool SameSymbolInVertical() {
             return (tiles[0, 0] == tiles[0, 1] && tiles[0, 1] == tiles[0, 2]) ||
                    (tiles[1, 0] == tiles[1, 1] && tiles[1, 1] == tiles[1, 2]) ||
                    (tiles[2, 0] == tiles[2, 1] && tiles[2, 1] == tiles[2, 2]);
         }
 
-        public bool AnyWinnerInHorizontalLine() {
+        private bool SameSymbolInHorizontal() {
             return (tiles[0, 0] == tiles[1, 0] && tiles[1, 0] == tiles[2, 0]) ||
                    (tiles[0, 1] == tiles[1, 1] && tiles[1, 1] == tiles[2, 1]) ||
                    (tiles[0, 2] == tiles[1, 2] && tiles[1, 2] == tiles[2, 2]);
         }
 
-        public bool AnyWinnerInDiagonalLine() {
+        private bool SameSymbolInDiagonal() {
             return (tiles[0, 0] == tiles[1, 1] && tiles[1, 1] == tiles[2, 2]) ||
                    (tiles[0, 2] == tiles[1, 1] && tiles[1, 1] == tiles[2, 0]);
         }
