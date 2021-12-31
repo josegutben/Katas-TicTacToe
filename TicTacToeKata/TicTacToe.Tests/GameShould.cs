@@ -92,7 +92,7 @@ namespace TicTacToe.Tests {
         }
 
         [Test]
-        public void players_can_not_move_when_game_is_finished() {
+        public void players_can_not_move_when_there_is_a_winner() {
             Play(new SymbolPlayer('X'), 0, 0);
             Play(new SymbolPlayer('O'), 0, 1);
             Play(new SymbolPlayer('X'), 1, 1);

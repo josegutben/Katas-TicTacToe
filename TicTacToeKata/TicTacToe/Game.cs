@@ -32,8 +32,11 @@ namespace TicTacToe {
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }
-            catch(PositionAlreadyInUseException) {
+            catch (PositionAlreadyInUseException) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.PositionAlreadyInUse);
+            }
+            catch (SameSymbolInLineException) {
+                throw new MovementCouldNotBeCompletedException(MovementErrorReason.GameIsFinished);
             }
         }
 
