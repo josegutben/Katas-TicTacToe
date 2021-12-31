@@ -14,6 +14,10 @@ namespace TicTacToe {
                 throw new SameSymbolInLineException();
             }
 
+            if (AllTilesAreFull()) {
+                throw new ThereIsAlreadyAWinnerException();
+            }
+
             if(tiles[coordinates.X, coordinates.Y] != ' ') {
                 throw new PositionAlreadyInUseException();
             }

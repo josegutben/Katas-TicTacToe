@@ -38,6 +38,9 @@ namespace TicTacToe {
             catch (SameSymbolInLineException) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.GameIsFinished);
             }
+            catch(ThereIsAlreadyAWinnerException) {
+                throw new MovementCouldNotBeCompletedException(MovementErrorReason.GameIsFinished);
+            }
         }
 
         private GameResult CheckGameResult(MovementResult movementResult) {
