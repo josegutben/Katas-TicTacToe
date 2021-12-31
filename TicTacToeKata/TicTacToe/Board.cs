@@ -8,7 +8,7 @@ namespace TicTacToe {
             boardTiles = new BoardTiles();
         }
 
-        public MovementResult Move(char symbol, Coordinates coordinates) {
+        public MovementResultDto Move(char symbol, Coordinates coordinates) {
             try {
                 return boardTiles.AddTile(symbol, coordinates);
             }

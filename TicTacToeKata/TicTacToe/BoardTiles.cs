@@ -9,7 +9,7 @@ namespace TicTacToe {
             InitializeTiles();
         }
 
-        public MovementResult AddTile(char symbol, Coordinates coordinates) {
+        public MovementResultDto AddTile(char symbol, Coordinates coordinates) {
             if (SameSymbolInLine()) {
                 throw new SameSymbolInLineException();
             }
@@ -24,9 +24,10 @@ namespace TicTacToe {
 
             tiles[coordinates.X, coordinates.Y] = symbol;
 
-            var boardIsFull = AllTilesAreFull();
-            var sameSymbolInLine = SameSymbolInLine();
-            return new MovementResult(boardIsFull, sameSymbolInLine);
+            return new MovementResultDto {
+                ThereIsAWinner = SameSymbolInLine(),
+                BoardIsFull = AllTilesAreFull()
+            };
         }
 
         private bool SameSymbolInLine() {

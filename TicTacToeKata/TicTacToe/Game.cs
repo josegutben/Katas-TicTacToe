@@ -26,7 +26,7 @@ namespace TicTacToe {
             }
         }
 
-        private MovementResult TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+        private MovementResultDto TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             try {
                 var movementResult = board.Move(symbolPlayer.GetSymbol(), coordinates);
                 lastSymbol = symbolPlayer;
@@ -37,16 +37,16 @@ namespace TicTacToe {
             }
         }
 
-        private GameResult CheckGameResult(MovementResult movementResult) {
+        private GameResult CheckGameResult(MovementResultDto movementResultDto) {
             var playerWinnerSymbol = new SymbolPlayer(' ');
             var gameIsFinished = false;
 
-            if(movementResult.ThereIsAWinner()) {
+            if(movementResultDto.ThereIsAWinner) {
                 playerWinnerSymbol = lastSymbol;
                 gameIsFinished = true;
             }
 
-            if(movementResult.BoardIsFull()) {
+            if(movementResultDto.BoardIsFull) {
                 gameIsFinished = true;
             }
 
