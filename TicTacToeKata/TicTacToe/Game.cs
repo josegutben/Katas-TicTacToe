@@ -28,14 +28,13 @@ namespace TicTacToe {
 
         private MovementResult TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             try {
-                var movementResult = board.Move(symbolPlayer, coordinates);
+                var movementResult = board.Move(symbolPlayer.GetSymbol(), coordinates);
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }
             catch (BoardException ex) {
                 throw new MovementCouldNotBeCompletedException(ex.Reason);
             }
-            
         }
 
         private GameResult CheckGameResult(MovementResult movementResult) {
