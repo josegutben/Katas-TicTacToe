@@ -1,17 +1,17 @@
 ﻿namespace TicTacToe {
     public class SymbolPlayer {
-        private readonly char symbol;
+        private readonly Symbol symbol;
 
-        public SymbolPlayer(char symbol) {
+        public SymbolPlayer(Symbol symbol) {
             this.symbol = symbol;
         }
 
         public bool IsOPlayer() {
-            return symbol == 'O';
+            return symbol == Symbol.O;
         }
 
         public bool IsEmpty() {
-            return symbol == ' ';
+            return symbol == Symbol.NoPlayer;
         }
 
         public override bool Equals(object obj) {
@@ -27,7 +27,7 @@
             return symbolPlayer.symbol == symbol;
         }
 
-        public char GetSymbol() {
+        public Symbol GetSymbol() {
             return symbol;
         }
     }

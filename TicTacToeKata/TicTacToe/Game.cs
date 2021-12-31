@@ -7,7 +7,7 @@ namespace TicTacToe {
 
         public Game() {
             board = new Board();
-            lastSymbol = new SymbolPlayer(' ');
+            lastSymbol = new SymbolPlayer(Symbol.NoPlayer);
         }
 
         public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
@@ -28,7 +28,7 @@ namespace TicTacToe {
 
         private MovementResultDto TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             try {
-                var movementResult = board.Move(symbolPlayer.GetSymbol(), coordinates);
+                var movementResult = board.Move((char)symbolPlayer.GetSymbol(), coordinates);
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }
@@ -38,7 +38,7 @@ namespace TicTacToe {
         }
 
         private GameResult CheckGameResult(MovementResultDto movementResultDto) {
-            var playerWinnerSymbol = new SymbolPlayer(' ');
+            var playerWinnerSymbol = new SymbolPlayer(Symbol.NoPlayer);
             var gameIsFinished = false;
 
             if(movementResultDto.ThereIsAWinner) {

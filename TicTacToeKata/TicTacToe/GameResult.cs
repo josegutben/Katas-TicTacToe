@@ -1,9 +1,9 @@
 ﻿namespace TicTacToe {
     public class GameResult {
         private readonly bool isFinished;
-        private readonly char winnerSymbol;
+        private readonly Symbol winnerSymbol;
 
-        public GameResult(bool isFinished, char winnerSymbol) {
+        public GameResult(bool isFinished, Symbol winnerSymbol) {
             this.isFinished = isFinished;
             this.winnerSymbol = winnerSymbol;
         }
