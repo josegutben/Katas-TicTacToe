@@ -41,7 +41,7 @@ namespace TicTacToe {
             var playerWinnerSymbol = new SymbolPlayer(Symbol.NoPlayer);
             var gameIsFinished = false;
 
-            if(movementResultDto.ThereIsAWinner) {
+            if(movementResultDto.SameSymbolInLine) {
                 playerWinnerSymbol = lastSymbol;
                 gameIsFinished = true;
             }

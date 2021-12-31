@@ -18,7 +18,7 @@ namespace TicTacToe {
             tiles[coordinates.X, coordinates.Y] = symbol;
 
             return new MovementResultDto {
-                ThereIsAWinner = SameSymbolInLine(),
+                SameSymbolInLine = SameSymbolInLine(),
                 BoardIsFull = AllTilesAreFull()
             };
         }
