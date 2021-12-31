@@ -32,15 +32,10 @@ namespace TicTacToe {
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }
-            catch (PositionAlreadyInUseException) {
-                throw new MovementCouldNotBeCompletedException(MovementErrorReason.PositionAlreadyInUse);
+            catch (BoardException ex) {
+                throw new MovementCouldNotBeCompletedException(ex.Reason);
             }
-            catch (SameSymbolInLineException) {
-                throw new MovementCouldNotBeCompletedException(MovementErrorReason.GameIsFinished);
-            }
-            catch(ThereIsAlreadyAWinnerException) {
-                throw new MovementCouldNotBeCompletedException(MovementErrorReason.GameIsFinished);
-            }
+            
         }
 
         private GameResult CheckGameResult(MovementResult movementResult) {

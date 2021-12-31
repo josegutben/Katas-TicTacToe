@@ -1,10 +1,10 @@
 ﻿using System;
 
 namespace TicTacToe.Exceptions {
-    public class MovementCouldNotBeCompletedException : Exception {
+    public class BoardException : Exception {
         public MovementErrorReason Reason { get; private set; }
 
-        public MovementCouldNotBeCompletedException(MovementErrorReason reason) {
+        public BoardException(MovementErrorReason reason) {
             Reason = reason;
         }
     }
