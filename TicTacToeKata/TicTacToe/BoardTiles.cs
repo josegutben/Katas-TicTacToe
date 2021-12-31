@@ -31,6 +31,18 @@ namespace TicTacToe {
             };
         }
 
+        private void InitializeTiles() {
+            for (var line = 0; line < Size; line++) {
+                InitializeLine(line);
+            }
+        }
+
+        private void InitializeLine(int line) {
+            for (var column = 0; column < Size; column++) {
+                tiles[line, column] = ' ';
+            }
+        }
+
         private bool SameSymbolInLine() {
             return SameSymbolInVertical() || SameSymbolInHorizontal() || SameSymbolInDiagonal();
         }
@@ -44,14 +56,6 @@ namespace TicTacToe {
             }
 
             return true;
-        }
-
-        private void InitializeTiles() {
-            for (var i = 0; i < Size; i++) {
-                for (var j = 0; j < Size; j++) {
-                    tiles[i, j] = ' ';
-                }
-            }
         }
 
         private bool SameSymbolInVertical() {
