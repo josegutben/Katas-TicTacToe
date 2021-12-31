@@ -3,6 +3,7 @@
 namespace TicTacToe {
     public class BoardTiles {
         private const int Size = 3;
+        private const char EmptyTile = ' ';
         private readonly char[,] tiles;
 
         public BoardTiles() {
@@ -11,17 +12,8 @@ namespace TicTacToe {
         }
 
         public MovementResultDto AddTile(char symbol, Coordinates coordinates) {
-            if (SameSymbolInLine()) {
-                throw new SameSymbolInLineException();
-            }
-
-            if (AllTilesAreFull()) {
-                throw new ThereIsAlreadyAWinnerException();
-            }
-
-            if(tiles[coordinates.X, coordinates.Y] != ' ') {
-                throw new PositionAlreadyInUseException();
-            }
+            CheckBoardTilesStatus();
+            CheckPosition(coordinates.X, coordinates.Y);
 
             tiles[coordinates.X, coordinates.Y] = symbol;
 
@@ -29,6 +21,22 @@ namespace TicTacToe {
                 ThereIsAWinner = SameSymbolInLine(),
                 BoardIsFull = AllTilesAreFull()
             };
+        }
+
+        private void CheckBoardTilesStatus() {
+            if (SameSymbolInLine()) {
+                throw new SameSymbolInLineException();
+            }
+
+            if (AllTilesAreFull()) {
+                throw new ThereIsAlreadyAWinnerException();
+            }
+        }
+
+        private void CheckPosition(int line, int column) {
+            if(tiles[line, column] != EmptyTile) {
+                throw new PositionAlreadyInUseException();
+            }
         }
 
         private void InitializeTiles() {
@@ -39,7 +47,7 @@ namespace TicTacToe {
 
         private void InitializeLine(int line) {
             for (var column = 0; column < Size; column++) {
-                tiles[line, column] = ' ';
+                tiles[line, column] = EmptyTile;
             }
         }
 
@@ -48,14 +56,25 @@ namespace TicTacToe {
         }
 
         private bool AllTilesAreFull() {
-            for(var i = 0; i < Size; i++) {
-                for(var j = 0; j < Size; j++) {
-                    if(tiles[i, j] == ' ')
-                        return false;
-                }
+            for(var line = 0; line < Size; line++) {
+                if (!LineIsFull(line)) 
+                    return false;
             }
 
             return true;
+        }
+
+        private bool LineIsFull(int line) {
+            for (var column = 0; column < Size; column++) {
+                if (TileIsEmpty(line, column)) 
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool TileIsEmpty(int line, int column) {
+            return tiles[line, column] == EmptyTile;
         }
 
         private bool SameSymbolInVertical() {
