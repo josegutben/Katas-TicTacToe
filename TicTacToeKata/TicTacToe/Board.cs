@@ -6,12 +6,8 @@
             boardTiles = new BoardTiles();
         }
 
-        public void Move(SymbolPlayer symbolPlayer, Coordinates coordinates) {
-            boardTiles.AddTile(symbolPlayer.GetSymbol(), coordinates);
-        }
-
-        public bool GameIsFinished() {
-            return boardTiles.SameSymbolInLine();
+        public MovementResult Move(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+            return boardTiles.AddTile(symbolPlayer.GetSymbol(), coordinates);
         }
     }
 }

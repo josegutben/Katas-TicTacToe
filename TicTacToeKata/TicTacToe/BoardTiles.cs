@@ -9,16 +9,31 @@ namespace TicTacToe {
             InitializeTiles();
         }
 
-        public void AddTile(char symbol, Coordinates coordinates) {
+        public MovementResult AddTile(char symbol, Coordinates coordinates) {
             if(tiles[coordinates.X, coordinates.Y] != ' ') {
                 throw new PositionAlreadyInUseException();
             }
 
             tiles[coordinates.X, coordinates.Y] = symbol;
+
+            var boardIsFull = AllTilesAreFull();
+            var sameSymbolInLine = SameSymbolInLine();
+            return new MovementResult(boardIsFull, sameSymbolInLine);
         }
 
-        public bool SameSymbolInLine() {
+        private bool SameSymbolInLine() {
             return SameSymbolInVertical() || SameSymbolInHorizontal() || SameSymbolInDiagonal();
+        }
+
+        private bool AllTilesAreFull() {
+            for(var i = 0; i < 3; i++) {
+                for(var j = 0; j < 3; j++) {
+                    if(tiles[i, j] == ' ')
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         private void InitializeTiles() {

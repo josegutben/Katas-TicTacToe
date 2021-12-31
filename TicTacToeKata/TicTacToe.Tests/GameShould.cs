@@ -85,7 +85,7 @@ namespace TicTacToe.Tests {
             Play(new SymbolPlayer('X'), 2, 2);
             Play(new SymbolPlayer('O'), 0, 0);
             Play(new SymbolPlayer('X'), 1, 0);
-            Play(new SymbolPlayer('O'), 0, 0);
+            Play(new SymbolPlayer('O'), 1, 2);
             var playResult = Play(new SymbolPlayer('X'), 0, 1);
 
             playResult.Should().BeEquivalentTo(expectedGameResult);

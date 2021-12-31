@@ -12,32 +12,45 @@ namespace TicTacToe {
 
         public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
             CheckMovement(symbolPlayer);
-            TryToMove(symbolPlayer, coordinates);
-            return CheckGameResult();
+            var movementResult = TryToMove(symbolPlayer, coordinates);
+            return CheckGameResult(movementResult);
         }
 
-        private GameResult CheckGameResult() {
-            return board.GameIsFinished() ? new GameResult(true, lastSymbol.GetSymbol()) : new GameResult(false, ' ');
-        }
-
-        private void TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
-            try {
-                board.Move(symbolPlayer, coordinates);
-                lastSymbol = symbolPlayer;
+        private void CheckMovement(SymbolPlayer symbolPlayer) {
+            if(IsOFirstPlayer(symbolPlayer)) {
+                throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
-            catch (PositionAlreadyInUseException) {
+
+            if(IsNoTurnForPlayer(symbolPlayer)) {
+                throw new MovementCouldNotBeCompletedException(MovementErrorReason.NoPlayerTurn);
+            }
+        }
+
+        private MovementResult TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+            try {
+                var movementResult = board.Move(symbolPlayer, coordinates);
+                lastSymbol = symbolPlayer;
+                return movementResult;
+            }
+            catch(PositionAlreadyInUseException) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.PositionAlreadyInUse);
             }
         }
 
-        private void CheckMovement(SymbolPlayer symbolPlayer) {
-            if (IsOFirstPlayer(symbolPlayer)) {
-                throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
+        private GameResult CheckGameResult(MovementResult movementResult) {
+            var playerWinnerSymbol = new SymbolPlayer(' ');
+            var gameIsFinished = false;
+
+            if(movementResult.ThereIsAWinner()) {
+                playerWinnerSymbol = lastSymbol;
+                gameIsFinished = true;
             }
 
-            if (IsNoTurnForPlayer(symbolPlayer)) {
-                throw new MovementCouldNotBeCompletedException(MovementErrorReason.NoPlayerTurn);
+            if(movementResult.BoardIsFull()) {
+                gameIsFinished = true;
             }
+
+            return new GameResult(gameIsFinished, playerWinnerSymbol.GetSymbol());
         }
 
         private bool IsNoTurnForPlayer(SymbolPlayer symbolPlayer) {
