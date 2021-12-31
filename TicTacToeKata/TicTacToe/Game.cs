@@ -11,12 +11,12 @@ namespace TicTacToe {
         }
 
         public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
-            CheckMovement(symbolPlayer);
+            CheckPlayer(symbolPlayer);
             var movementResult = TryToMove(symbolPlayer, coordinates);
             return CheckGameResult(movementResult);
         }
 
-        private void CheckMovement(SymbolPlayer symbolPlayer) {
+        private void CheckPlayer(SymbolPlayer symbolPlayer) {
             if(IsOFirstPlayer(symbolPlayer)) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
