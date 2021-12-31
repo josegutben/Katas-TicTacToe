@@ -2,10 +2,11 @@
 
 namespace TicTacToe {
     public class BoardTiles {
+        private const int Size = 3;
         private readonly char[,] tiles;
 
         public BoardTiles() {
-            tiles = new char[3, 3];
+            tiles = new char[Size, Size];
             InitializeTiles();
         }
 
@@ -35,8 +36,8 @@ namespace TicTacToe {
         }
 
         private bool AllTilesAreFull() {
-            for(var i = 0; i < 3; i++) {
-                for(var j = 0; j < 3; j++) {
+            for(var i = 0; i < Size; i++) {
+                for(var j = 0; j < Size; j++) {
                     if(tiles[i, j] == ' ')
                         return false;
                 }
@@ -46,8 +47,8 @@ namespace TicTacToe {
         }
 
         private void InitializeTiles() {
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 3; j++) {
+            for (var i = 0; i < Size; i++) {
+                for (var j = 0; j < Size; j++) {
                     tiles[i, j] = ' ';
                 }
             }
