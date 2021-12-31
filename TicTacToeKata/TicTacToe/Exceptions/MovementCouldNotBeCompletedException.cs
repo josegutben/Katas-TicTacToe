@@ -12,6 +12,7 @@ namespace TicTacToe.Exceptions {
     public enum MovementErrorReason {
         WrongFirstPlayer,
         NoPlayerTurn,
-        PositionAlreadyInUse
+        PositionAlreadyInUse,
+        GameIsFinished
     }
 }

@@ -91,6 +91,18 @@ namespace TicTacToe.Tests {
             playResult.Should().BeEquivalentTo(expectedGameResult);
         }
 
+        [Test]
+        public void players_can_not_move_when_game_is_finished() {
+            Play(new SymbolPlayer('X'), 0, 0);
+            Play(new SymbolPlayer('O'), 0, 1);
+            Play(new SymbolPlayer('X'), 1, 1);
+            Play(new SymbolPlayer('O'), 0, 2);
+            Play(new SymbolPlayer('X'), 2, 2);
+            Action wrongPlayerTurn = () => Play(new SymbolPlayer('O'), 1, 0);
+
+            wrongPlayerTurn.Should().Throw<MovementCouldNotBeCompletedException>().And.Reason.Should().Be(MovementErrorReason.GameIsFinished);
+        }
+
         private GameResult Play(SymbolPlayer symbolPlayer, int x, int y) {
             return game.Play(symbolPlayer, new Coordinates(x, y));
         }
