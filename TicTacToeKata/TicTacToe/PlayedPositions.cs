@@ -9,19 +9,32 @@ namespace TicTacToe {
             playedPositions = new Dictionary<BoardPosition, SymbolPlayer>();
         }
 
-        public void Add(BoardPosition boardPosition, SymbolPlayer symbolPlayer) {
+        public MovementResultDto Add(BoardPosition boardPosition, SymbolPlayer symbolPlayer) {
+            if(SameSymbolInLine()) {
+                throw new SameSymbolInLineException();
+            }
+
+            if (AllTilesAreFull()) {
+                throw new ThereIsAlreadyAWinnerException();
+            }
+
             if (playedPositions.ContainsKey(boardPosition)) {
                 throw new PositionAlreadyInUseException();
             }
             
             playedPositions.Add(boardPosition, symbolPlayer);
+
+            return new MovementResultDto {
+                SameSymbolInLine = SameSymbolInLine(),
+                BoardIsFull = AllTilesAreFull()
+            };
         }
 
-        public bool SameSymbolInLine() {
+        private bool SameSymbolInLine() {
             return SameSymbolInVertical() || SameSymbolInHorizontal() || SameSymbolInDiagonal();
         }
 
-        public bool AllTilesAreFull() {
+        private bool AllTilesAreFull() {
             return playedPositions.Count == 9;
         }
 

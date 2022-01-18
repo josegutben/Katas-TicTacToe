@@ -10,14 +10,7 @@ namespace TicTacToe {
 
         public MovementResultDto Move(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             try {
-                CheckBoardTilesStatus();
-
-                playedPositions.Add(boardPosition, symbolPlayer);
-
-                return new MovementResultDto {
-                    SameSymbolInLine = playedPositions.SameSymbolInLine(),
-                    BoardIsFull = playedPositions.AllTilesAreFull()
-                };
+                return playedPositions.Add(boardPosition, symbolPlayer);
             }
             catch (PositionAlreadyInUseException) {
                 throw new BoardException(MovementErrorReason.PositionAlreadyInUse);
@@ -27,16 +20,6 @@ namespace TicTacToe {
             }
             catch(ThereIsAlreadyAWinnerException) {
                 throw new BoardException(MovementErrorReason.GameIsFinished);
-            }
-        }
-
-        private void CheckBoardTilesStatus() {
-            if(playedPositions.SameSymbolInLine()) {
-                throw new SameSymbolInLineException();
-            }
-
-            if(playedPositions.AllTilesAreFull()) {
-                throw new ThereIsAlreadyAWinnerException();
             }
         }
     }
