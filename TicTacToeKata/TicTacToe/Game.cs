@@ -28,7 +28,7 @@ namespace TicTacToe {
 
         private MovementResultDto TryToMove(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             try {
-                var movementResult = board.Move((char)symbolPlayer.GetSymbol(), boardPosition);
+                var movementResult = board.Move(symbolPlayer, boardPosition);
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }

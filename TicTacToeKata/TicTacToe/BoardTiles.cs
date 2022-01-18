@@ -3,17 +3,17 @@ using TicTacToe.Exceptions;
 
 namespace TicTacToe {
     public class BoardTiles {
-        private readonly Dictionary<BoardPosition, char> playedPositions;
+        private readonly Dictionary<BoardPosition, SymbolPlayer> playedPositions;
 
         public BoardTiles() {
-            playedPositions = new Dictionary<BoardPosition, char>();
+            playedPositions = new Dictionary<BoardPosition, SymbolPlayer>();
         }
 
-        public MovementResultDto AddTile(char symbol, BoardPosition boardPosition) {
+        public MovementResultDto AddTile(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             CheckBoardTilesStatus();
             CheckPosition(boardPosition);
 
-            playedPositions.Add(boardPosition, symbol);
+            playedPositions.Add(boardPosition, symbolPlayer);
 
             return new MovementResultDto {
                 SameSymbolInLine = SameSymbolInLine(),
