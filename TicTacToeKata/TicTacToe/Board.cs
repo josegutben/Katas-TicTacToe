@@ -8,9 +8,9 @@ namespace TicTacToe {
             boardTiles = new BoardTiles();
         }
 
-        public MovementResultDto Move(char symbol, Coordinates coordinates) {
+        public MovementResultDto Move(char symbol, BoardPosition boardPosition) {
             try {
-                return boardTiles.AddTile(symbol, coordinates);
+                return boardTiles.AddTile(symbol, boardPosition);
             }
             catch (PositionAlreadyInUseException) {
                 throw new BoardException(MovementErrorReason.PositionAlreadyInUse);

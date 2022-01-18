@@ -10,9 +10,9 @@ namespace TicTacToe {
             lastSymbol = new SymbolPlayer(Symbol.NoPlayer);
         }
 
-        public GameResult Play(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+        public GameResult Play(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             CheckPlayer(symbolPlayer);
-            var movementResult = TryToMove(symbolPlayer, coordinates);
+            var movementResult = TryToMove(symbolPlayer, boardPosition);
             return CheckGameResult(movementResult);
         }
 
@@ -26,9 +26,9 @@ namespace TicTacToe {
             }
         }
 
-        private MovementResultDto TryToMove(SymbolPlayer symbolPlayer, Coordinates coordinates) {
+        private MovementResultDto TryToMove(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             try {
-                var movementResult = board.Move((char)symbolPlayer.GetSymbol(), coordinates);
+                var movementResult = board.Move((char)symbolPlayer.GetSymbol(), boardPosition);
                 lastSymbol = symbolPlayer;
                 return movementResult;
             }

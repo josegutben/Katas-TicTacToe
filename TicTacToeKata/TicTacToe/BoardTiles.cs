@@ -1,21 +1,19 @@
-﻿using TicTacToe.Exceptions;
+﻿using System.Collections.Generic;
+using TicTacToe.Exceptions;
 
 namespace TicTacToe {
     public class BoardTiles {
-        private const int Size = 3;
-        private const char EmptyTile = ' ';
-        private readonly char[,] tiles;
+        private readonly Dictionary<BoardPosition, char> playedPositions;
 
         public BoardTiles() {
-            tiles = new char[Size, Size];
-            InitializeTiles();
+            playedPositions = new Dictionary<BoardPosition, char>();
         }
 
-        public MovementResultDto AddTile(char symbol, Coordinates coordinates) {
+        public MovementResultDto AddTile(char symbol, BoardPosition boardPosition) {
             CheckBoardTilesStatus();
-            CheckPosition(coordinates.X, coordinates.Y);
+            CheckPosition(boardPosition);
 
-            tiles[coordinates.X, coordinates.Y] = symbol;
+            playedPositions.Add(boardPosition, symbol);
 
             return new MovementResultDto {
                 SameSymbolInLine = SameSymbolInLine(),
@@ -33,21 +31,9 @@ namespace TicTacToe {
             }
         }
 
-        private void CheckPosition(int line, int column) {
-            if(tiles[line, column] != EmptyTile) {
+        private void CheckPosition(BoardPosition boardPosition) {
+            if(playedPositions.ContainsKey(boardPosition)) {
                 throw new PositionAlreadyInUseException();
-            }
-        }
-
-        private void InitializeTiles() {
-            for (var line = 0; line < Size; line++) {
-                InitializeLine(line);
-            }
-        }
-
-        private void InitializeLine(int line) {
-            for (var column = 0; column < Size; column++) {
-                tiles[line, column] = EmptyTile;
             }
         }
 
@@ -56,42 +42,61 @@ namespace TicTacToe {
         }
 
         private bool AllTilesAreFull() {
-            for(var line = 0; line < Size; line++) {
-                if (!LineIsFull(line)) 
-                    return false;
-            }
-
-            return true;
-        }
-
-        private bool LineIsFull(int line) {
-            for (var column = 0; column < Size; column++) {
-                if (TileIsEmpty(line, column)) 
-                    return false;
-            }
-
-            return true;
-        }
-
-        private bool TileIsEmpty(int line, int column) {
-            return tiles[line, column] == EmptyTile;
+            return playedPositions.Count == 9;
         }
 
         private bool SameSymbolInVertical() {
-            return (tiles[0, 0] != ' ' && tiles[0, 0] == tiles[0, 1] && tiles[0, 1] == tiles[0, 2]) ||
-                   (tiles[1, 0] != ' ' && tiles[1, 0] == tiles[1, 1] && tiles[1, 1] == tiles[1, 2]) ||
-                   (tiles[2, 0] != ' ' && tiles[2, 0] == tiles[2, 1] && tiles[2, 1] == tiles[2, 2]);
+            return (playedPositions.ContainsKey(BoardPosition.TopRight) &&
+                    playedPositions.ContainsKey(BoardPosition.MidRight) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomRight) &&
+                    playedPositions[BoardPosition.TopRight] == playedPositions[BoardPosition.MidRight] &&
+                    playedPositions[BoardPosition.MidRight] == playedPositions[BoardPosition.BottomRight])
+                   ||
+                   (playedPositions.ContainsKey(BoardPosition.TopMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.MidMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomMiddle) &&
+                    playedPositions[BoardPosition.TopMiddle] == playedPositions[BoardPosition.MidMiddle] &&
+                    playedPositions[BoardPosition.MidMiddle] == playedPositions[BoardPosition.BottomMiddle])
+                   ||
+                   (playedPositions.ContainsKey(BoardPosition.TopLeft) &&
+                    playedPositions.ContainsKey(BoardPosition.MidLeft) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomLeft) &&
+                    playedPositions[BoardPosition.TopLeft] == playedPositions[BoardPosition.MidLeft] &&
+                    playedPositions[BoardPosition.MidLeft] == playedPositions[BoardPosition.BottomLeft]);
         }
 
         private bool SameSymbolInHorizontal() {
-            return (tiles[0, 0] != ' ' && tiles[0, 0] == tiles[1, 0] && tiles[1, 0] == tiles[2, 0]) ||
-                   (tiles[0, 1] != ' ' && tiles[0, 1] == tiles[1, 1] && tiles[1, 1] == tiles[2, 1]) ||
-                   (tiles[0, 2] != ' ' && tiles[0, 2] == tiles[1, 2] && tiles[1, 2] == tiles[2, 2]);
+            return (playedPositions.ContainsKey(BoardPosition.TopRight) &&
+                    playedPositions.ContainsKey(BoardPosition.TopMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.TopLeft) &&
+                    playedPositions[BoardPosition.TopRight] == playedPositions[BoardPosition.TopMiddle] &&
+                    playedPositions[BoardPosition.TopMiddle] == playedPositions[BoardPosition.TopLeft])
+                   ||
+                   (playedPositions.ContainsKey(BoardPosition.MidRight) &&
+                    playedPositions.ContainsKey(BoardPosition.MidMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.MidLeft) &&
+                    playedPositions[BoardPosition.MidRight] == playedPositions[BoardPosition.MidMiddle] &&
+                    playedPositions[BoardPosition.MidMiddle] == playedPositions[BoardPosition.MidLeft])
+                   ||
+                   (playedPositions.ContainsKey(BoardPosition.BottomRight) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomLeft) &&
+                    playedPositions[BoardPosition.BottomRight] == playedPositions[BoardPosition.BottomMiddle] &&
+                    playedPositions[BoardPosition.BottomMiddle] == playedPositions[BoardPosition.BottomLeft]);
         }
 
         private bool SameSymbolInDiagonal() {
-            return (tiles[0, 0] != ' ' && tiles[0, 0] == tiles[1, 1] && tiles[1, 1] == tiles[2, 2]) ||
-                   (tiles[2, 0] != ' ' && tiles[0, 2] == tiles[1, 1] && tiles[1, 1] == tiles[2, 0]);
+            return (playedPositions.ContainsKey(BoardPosition.TopRight) &&
+                    playedPositions.ContainsKey(BoardPosition.MidMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomLeft) &&
+                    playedPositions[BoardPosition.TopRight] == playedPositions[BoardPosition.MidMiddle] &&
+                    playedPositions[BoardPosition.MidMiddle] == playedPositions[BoardPosition.BottomLeft])
+                   ||
+                   (playedPositions.ContainsKey(BoardPosition.TopLeft) &&
+                    playedPositions.ContainsKey(BoardPosition.MidMiddle) &&
+                    playedPositions.ContainsKey(BoardPosition.BottomRight) &&
+                    playedPositions[BoardPosition.TopLeft] == playedPositions[BoardPosition.MidMiddle] &&
+                    playedPositions[BoardPosition.MidMiddle] == playedPositions[BoardPosition.BottomRight]);
         }
     }
 }
