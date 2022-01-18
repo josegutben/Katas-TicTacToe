@@ -10,17 +10,8 @@ namespace TicTacToe {
         }
 
         public MovementResultDto Add(BoardPosition boardPosition, SymbolPlayer symbolPlayer) {
-            if(SameSymbolInLine()) {
-                throw new SameSymbolInLineException();
-            }
-
-            if (AllTilesAreFull()) {
-                throw new ThereIsAlreadyAWinnerException();
-            }
-
-            if (playedPositions.ContainsKey(boardPosition)) {
-                throw new PositionAlreadyInUseException();
-            }
+            CheckPreviousPlayedPositions();
+            CheckNextPosition(boardPosition);
             
             playedPositions.Add(boardPosition, symbolPlayer);
 
@@ -28,6 +19,26 @@ namespace TicTacToe {
                 SameSymbolInLine = SameSymbolInLine(),
                 BoardIsFull = AllTilesAreFull()
             };
+        }
+
+        private void CheckPreviousPlayedPositions() {
+            if(SameSymbolInLine()) {
+                throw new SameSymbolInLineException();
+            }
+
+            if(AllTilesAreFull()) {
+                throw new ThereIsAlreadyAWinnerException();
+            }
+        }
+
+        private void CheckNextPosition(BoardPosition boardPosition) {
+            if (PositionIsAlreadyPlayed(boardPosition)) {
+                throw new PositionAlreadyInUseException();
+            }
+        }
+
+        private bool PositionIsAlreadyPlayed(BoardPosition boardPosition) {
+            return playedPositions.ContainsKey(boardPosition);
         }
 
         private bool SameSymbolInLine() {
