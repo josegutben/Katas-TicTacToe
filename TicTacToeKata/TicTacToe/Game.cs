@@ -21,7 +21,7 @@ namespace TicTacToe {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.WrongFirstPlayer);
             }
 
-            if(IsNoTurnForPlayer(symbolPlayer)) {
+            if(IsNoTurnFor(symbolPlayer)) {
                 throw new MovementCouldNotBeCompletedException(MovementErrorReason.NoPlayerTurn);
             }
         }
@@ -53,7 +53,7 @@ namespace TicTacToe {
             return new GameResult(gameIsFinished, playerWinnerSymbol.GetSymbol());
         }
 
-        private bool IsNoTurnForPlayer(SymbolPlayer symbolPlayer) {
+        private bool IsNoTurnFor(SymbolPlayer symbolPlayer) {
             return lastSymbol.Equals(symbolPlayer);
         }
 
