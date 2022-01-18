@@ -2,15 +2,22 @@
 
 namespace TicTacToe {
     public class Board {
-        private readonly BoardTiles boardTiles;
+        private readonly PlayedPositions playedPositions;
 
         public Board() {
-            boardTiles = new BoardTiles();
+            playedPositions = new PlayedPositions();
         }
 
         public MovementResultDto Move(SymbolPlayer symbolPlayer, BoardPosition boardPosition) {
             try {
-                return boardTiles.AddTile(symbolPlayer, boardPosition);
+                CheckBoardTilesStatus();
+
+                playedPositions.Add(boardPosition, symbolPlayer);
+
+                return new MovementResultDto {
+                    SameSymbolInLine = playedPositions.SameSymbolInLine(),
+                    BoardIsFull = playedPositions.AllTilesAreFull()
+                };
             }
             catch (PositionAlreadyInUseException) {
                 throw new BoardException(MovementErrorReason.PositionAlreadyInUse);
@@ -20,6 +27,16 @@ namespace TicTacToe {
             }
             catch(ThereIsAlreadyAWinnerException) {
                 throw new BoardException(MovementErrorReason.GameIsFinished);
+            }
+        }
+
+        private void CheckBoardTilesStatus() {
+            if(playedPositions.SameSymbolInLine()) {
+                throw new SameSymbolInLineException();
+            }
+
+            if(playedPositions.AllTilesAreFull()) {
+                throw new ThereIsAlreadyAWinnerException();
             }
         }
     }
